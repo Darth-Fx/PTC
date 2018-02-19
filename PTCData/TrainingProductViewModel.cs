@@ -8,7 +8,7 @@ namespace PTCData
 {
     public class TrainingProductViewModel
     {
-
+        public string TestProp1 { get; set; }
         public List<TrainingProduct> Products { get; set; }
         public string EventCommand { get; set; }
         public TrainingProduct SearchEntity { get; set; }
@@ -67,6 +67,7 @@ namespace PTCData
 
         private void Save()
         {
+
             TrainingProductManager mgr = new TrainingProductManager();
             if (Mode == "Add")
             {
@@ -80,12 +81,14 @@ namespace PTCData
 
             if (!IsValid)
             { 
+
                 if (Mode == "Add")
                 {
                     AddMode();
                 }
             }
         }
+
         private void ListMode()
         {
             IsValid = true;

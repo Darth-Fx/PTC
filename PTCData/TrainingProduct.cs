@@ -4,12 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace PTCData
 {
     public class TrainingProduct
     {
         public int ProductId { get; set; }
+
 
         [Required(ErrorMessage = "Product Name must be filled in.")]
         [Display(Description = "Product Name")]
