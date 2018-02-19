@@ -111,6 +111,7 @@
             <table class="table table-condensed table-bordered table-striped table-hover">
                 <thead>
                     <tr>
+                        <th class="pdsa-action-button-column">Edit</th>
                         <th>Product Name</th>
                         <th>Introduction Date</th>
                         <th>Url</th>
@@ -121,6 +122,12 @@
                     @foreach (var item in Model.Products)
                     {
                         <tr>
+                            <td class="pdsa-action-button-column">
+                                <a href="#" data-pdsa-action="edit" 
+                                   class="btn btn-default btn-sm">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </a>
+                            </td>
                             <td>@item.ProductName</td>
                             <td>@item.IntroductionDate</td>
                             <td>@item.Url</td>
