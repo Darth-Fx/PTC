@@ -1,31 +1,137 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model PTCData.TrainingProductViewModel
+@{
+    ViewBag.Title = "Pipoos Traing Company";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@*the action attribute of this form element will be Home/Index*@
+@using (Html.BeginForm())
+{
+    <!--BEGIN HIDDEN FIELDS AREA-->
+    @Html.HiddenFor(m => m.EventCommand)
+    @Html.HiddenFor(m => m.Mode)
+    <!--END HIDDEN FIELDS AREA-->
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+    <!--BEGIN SEARCH AREA-->
+    if (Model.IsSearchAreaVisible)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Search for products</h1>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SearchEntity.ProductName, "Product Name")
+                    @Html.TextBoxFor(m => m.SearchEntity.ProductName,
+                                                                new { @class = "form-control" })
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button id="btnSearch" class="btn btn-sm btn-primary" data-psda-action="search">
+                    <i class="glyphicon glyphicon-search"></i>&nbsp;Search
+                </button>
+
+                <button id="btnReset" class="btn btn-sm btn-primary" data-psda-action="resetsearch">
+                    <i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset
+                </button>
+                <button id="btnAdd" class="btn btn-sm btn-primary" data-psda-action="add">
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp;Add
+                </button>
+            </div>
+        </div>
+    }
+    <!--END SEARCH AREA-->
+
+    <!--BEGIN DETAIL AREA-->
+    if (Model.IsDetailAreaVisible)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Product Information</h1>
+            </div>
+            <div class="panel-body">
+                <!--BEGIN MESSAGE AREA-->
+
+                <!--END MESSAGE AREA-->
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Entity.ProductName, "Product Name")
+                    @Html.TextBoxFor(m => m.Entity.ProductName, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Entity.IntroductionDate, "Introduction Date")
+                    @Html.TextBoxFor(m => m.Entity.IntroductionDate, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Entity.Url, "URL")
+                    @Html.TextBoxFor(m => m.Entity.Url, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Entity.Price, "Price")
+                    @Html.TextBoxFor(m => m.Entity.Price, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button id="btnSave" class="btn btn-sm btn-primary" data-psda-action="save">
+                            <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save
+                        </button>
+                        <button id="btnCancel" class="btn btn-sm btn-primary" data-psda-action="cancel" formnovalidate="formnovalidate">
+                            <i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!--END DETAIL AREA-->
+
+    <!--BEGIN LIST AREA-->
+    if (Model.IsListAreaVisible)
+    {
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Introduction Date</th>
+                        <th>Url</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.IntroductionDate</td>
+                            <td>@item.Url</td>
+                            <td>@item.Price.ToString("c")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    <!--END LIST AREA-->
+
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("[data-psda-action]").on("click", function (e) {
+                e.preventDefault();
+                //set tha value of the element with id=EventCommand to take the value of
+                //the element that fired of this click event of its data-psda-action attribute
+                $("#EventCommand").val($(this).data("psda-action"));
+
+                $("form").submit();
+
+            });
+        });
+    </script>
+}
