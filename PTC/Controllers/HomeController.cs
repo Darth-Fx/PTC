@@ -19,8 +19,14 @@ namespace PTC.Controllers
         [HttpPost]
         public ActionResult Index(TrainingProductViewModel vm)
         {
+            vm.IsValid = ModelState.IsValid;
             vm.HandleRequest();
-            ModelState.Clear();
+
+            if(vm.IsValid)
+            {
+                ModelState.Clear();
+            }
+
             return View(vm);
         }
     }

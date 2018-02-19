@@ -8,7 +8,7 @@ namespace PTCData
 {
     public class TrainingProductViewModel
     {
-
+        public string TestProp1 { get; set; }
         public List<TrainingProduct> Products { get; set; }
         public string EventCommand { get; set; }
         public TrainingProduct SearchEntity { get; set; }
@@ -46,6 +46,11 @@ namespace PTCData
                     break;
 
                 case "save":
+                    Save();
+                    if(!IsValid)
+                    {
+                        Get();
+                    }
                     break;
 
                 case "resetsearch":
@@ -59,6 +64,24 @@ namespace PTCData
 
                 default:
                     break;
+            }
+        }
+
+        private void Save()
+        {
+            if(IsValid)
+            {
+                if(Mode=="Add")
+                {
+                    //Add data to repository
+                }
+            }
+            else
+            {
+                if (Mode == "Add")
+                {
+                    AddMode();
+                }
             }
         }
 
