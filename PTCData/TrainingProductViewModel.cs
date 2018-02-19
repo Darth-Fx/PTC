@@ -19,9 +19,11 @@ namespace PTCData
         public bool IsValid { get; set; }
         public string Mode { get; set; }
         public List<KeyValuePair<string, string>> ValidationErrors { get; set; }
+        public string EventArgument { get; set; }
         private void Init()
         {
             EventCommand = "List";
+            EventArgument = string.Empty;
             ListMode();
             ValidationErrors = new List<KeyValuePair<string, string>>();
         }
@@ -49,6 +51,13 @@ namespace PTCData
 
                 case "save":
                     Save();
+                    //change belonging to AddCustomValidationProductMgr feature..
+                    if (IsValid)
+                        Get();
+                    break;
+
+                case "edit":
+                    System.Diagnostics.Debugger.Break();
                     break;
 
                 case "resetsearch":
