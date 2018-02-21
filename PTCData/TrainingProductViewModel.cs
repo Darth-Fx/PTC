@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PTCData
 {
-    public class TrainingProductViewModel
+    public class TrainingProductViewModel : BaseViewModel
     {
         private readonly ITrainingProductManager _tpmgr;
         public string TestProp1 { get; set; }
@@ -28,7 +28,7 @@ namespace PTCData
             ListMode();
             ValidationErrors = new List<KeyValuePair<string, string>>();
         }
-        public TrainingProductViewModel(ITrainingProductManager tpmanager)
+        public TrainingProductViewModel(ITrainingProductManager tpmanager) : base(tpmanager)
         {
             _tpmgr = tpmanager;
             Init();
@@ -36,7 +36,7 @@ namespace PTCData
             SearchEntity = new TrainingProduct();
             Entity = new TrainingProduct();
         }
-
+        
         public void HandleRequest()
         {
             switch (EventCommand.ToLower())
