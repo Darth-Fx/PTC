@@ -7,11 +7,13 @@ using System.Web.Mvc;
 
 namespace PTC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController(ITrainingProductManager tpm) : base(tpm)
+        {}
         public ActionResult Index()
         {
-            TrainingProductViewModel vm = new TrainingProductViewModel();
+            TrainingProductViewModel vm = new TrainingProductViewModel(base.TrainingProductManager);
             vm.HandleRequest();
             return View(vm);
         }
@@ -19,8 +21,21 @@ namespace PTC.Controllers
         [HttpPost]
         public ActionResult Index(TrainingProductViewModel vm)
         {
+
+           vm.IsValid = ModelState.IsValid;
+
             vm.HandleRequest();
-            ModelState.Clear();
+            if (vm.IsValid)
+            {
+                ModelState.Clear();
+            }
+            else
+            {
+                foreach(KeyValuePair<string,string> error in vm.ValidationErrors)
+                {
+                    ModelState.AddModelError(error.Key, error.Value);
+                }
+            }
             return View(vm);
         }
     }

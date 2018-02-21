@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PTC.ModelBinder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,8 @@ namespace PTC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ModelBinders.Binders.DefaultBinder = new BaseViewModelBinder();
         }
     }
 }
