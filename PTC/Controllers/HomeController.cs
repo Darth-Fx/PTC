@@ -11,7 +11,7 @@ namespace PTC.Controllers
     {
         public ActionResult Index()
         {
-            TrainingProductViewModel vm = new TrainingProductViewModel();
+            TrainingProductViewModel vm = new TrainingProductViewModel(new TrainingProductManager());
             vm.HandleRequest();
             return View(vm);
         }

@@ -8,6 +8,7 @@ namespace PTCData
 {
     public class TrainingProductViewModel
     {
+        private readonly ITrainingProductManager _tpmgr;
         public string TestProp1 { get; set; }
         public List<TrainingProduct> Products { get; set; }
         public string EventCommand { get; set; }
@@ -27,8 +28,9 @@ namespace PTCData
             ListMode();
             ValidationErrors = new List<KeyValuePair<string, string>>();
         }
-        public TrainingProductViewModel()
+        public TrainingProductViewModel(ITrainingProductManager tpmanager)
         {
+            _tpmgr = tpmanager;
             Init();
             Products = new List<TrainingProduct>();
             SearchEntity = new TrainingProduct();
@@ -77,12 +79,12 @@ namespace PTCData
         private void Save()
         {
 
-            TrainingProductManager mgr = new TrainingProductManager();
+            //TrainingProductManager mgr = new TrainingProductManager();
             if (Mode == "Add")
             {
-                mgr.Insert(this.Entity);
+                _tpmgr.Insert(this.Entity);
             }
-            ValidationErrors = mgr.ValidationErrors;
+            ValidationErrors = _tpmgr.ValidationErrors;
             if(ValidationErrors.Count > 0 )
             {
                 IsValid = false;
@@ -135,8 +137,8 @@ namespace PTCData
         }
         private void Get()
         {
-            TrainingProductManager mgr = new TrainingProductManager();
-            Products = mgr.Get(SearchEntity);
+            //TrainingProductManager mgr = new TrainingProductManager();
+            Products = _tpmgr.Get(SearchEntity);
         }
     }
 }

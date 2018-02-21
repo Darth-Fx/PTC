@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace PTCData
 {
-    public class TrainingProductManager
+    public class TrainingProductManager : ITrainingProductManager
     {
+        public List<TrainingProduct> Products { get; set; }
         public TrainingProductManager()
         {
             ValidationErrors = new List<KeyValuePair<string, string>>();
+            Products = CreateMockData();
         }
         public List<KeyValuePair<string,string>> ValidationErrors { get; set; }
 
@@ -35,7 +37,7 @@ namespace PTCData
             ret = Validate(entity);
             if(ret)
             {
-                //Create Insert Code Hereeee
+                Products.Add(entity);
             }
             return ret;
         }
@@ -43,8 +45,8 @@ namespace PTCData
         public List<TrainingProduct> Get(TrainingProduct entity)
         {
             List<TrainingProduct> ret = new List<TrainingProduct>();
-            ret = CreateMockData();
-            if(!string.IsNullOrEmpty(entity.ProductName))
+            ret = Products;
+            if (!string.IsNullOrEmpty(entity.ProductName))
             {
                 ret = ret.FindAll(p => p.ProductName.StartsWith(entity.ProductName));
             }
