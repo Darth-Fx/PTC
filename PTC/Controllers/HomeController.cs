@@ -7,11 +7,13 @@ using System.Web.Mvc;
 
 namespace PTC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController(ITrainingProductManager tpm) : base(tpm)
+        {}
         public ActionResult Index()
         {
-            TrainingProductViewModel vm = new TrainingProductViewModel();
+            TrainingProductViewModel vm = new TrainingProductViewModel(base.TrainingProductManager);
             vm.HandleRequest();
             return View(vm);
         }
