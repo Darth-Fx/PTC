@@ -9,9 +9,9 @@ namespace PTC.Controllers
 {
     public abstract class BaseController : Controller
     {
-        protected BaseController(ITrainingProductManager tpmgr)
+        protected BaseController(ITrainingProductManager toiletpapermgr)
         {
-            _tpmanager = tpmgr;
+            _tpmanager = toiletpapermgr;
         }
 
         private readonly ITrainingProductManager _tpmanager;
