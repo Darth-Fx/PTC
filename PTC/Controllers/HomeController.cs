@@ -13,7 +13,7 @@ namespace PTC.Controllers
         {}
         public ActionResult Index()
         {
-            TrainingProductViewModel vm = new TrainingProductViewModel(new TrainingProductManager());
+            TrainingProductViewModel vm = new TrainingProductViewModel(base.TrainingProductManager);
             vm.HandleRequest();
             return View(vm);
         }

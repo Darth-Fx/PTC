@@ -21,6 +21,7 @@ namespace PTC.ModelBinder
                 }
 
                 var instance = Activator.CreateInstance(modelType, baseControl.TrainingProductManager);
+                //var instance = Activator.CreateInstance(modelType, new TrainingProductManager());
                 bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => instance, modelType);
                 return instance;
             }

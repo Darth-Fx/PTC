@@ -8,6 +8,8 @@ namespace PTCData
         List<KeyValuePair<string, string>> ValidationErrors { get; set; }
 
         List<TrainingProduct> Get(TrainingProduct entity);
+        TrainingProduct Get(int productId);
+        bool Update(TrainingProduct entity);
         bool Insert(TrainingProduct entity);
         bool Validate(TrainingProduct entity);
     }

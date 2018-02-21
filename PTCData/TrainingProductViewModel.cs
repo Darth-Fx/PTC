@@ -8,7 +8,7 @@ namespace PTCData
 {
     public class TrainingProductViewModel : BaseViewModel
     {
-        private readonly ITrainingProductManager _tpmgr;
+        
         public string TestProp1 { get; set; }
         public List<TrainingProduct> Products { get; set; }
         public string EventCommand { get; set; }
@@ -30,7 +30,6 @@ namespace PTCData
         }
         public TrainingProductViewModel(ITrainingProductManager tpmanager) : base(tpmanager)
         {
-            _tpmgr = tpmanager;
             Init();
             Products = new List<TrainingProduct>();
             SearchEntity = new TrainingProduct();
@@ -59,7 +58,8 @@ namespace PTCData
                     break;
 
                 case "edit":
-                    System.Diagnostics.Debugger.Break();
+                    IsValid = true;
+                    Edit();
                     break;
 
                 case "resetsearch":
@@ -82,9 +82,14 @@ namespace PTCData
             //TrainingProductManager mgr = new TrainingProductManager();
             if (Mode == "Add")
             {
-                _tpmgr.Insert(this.Entity);
+                TrainingProductManager.Insert(this.Entity);
             }
-            ValidationErrors = _tpmgr.ValidationErrors;
+            if (Mode == "Edit")
+            {
+                TrainingProductManager.Update(this.Entity);
+            }
+            ValidationErrors = TrainingProductManager.ValidationErrors;
+
             if(ValidationErrors.Count > 0 )
             {
                 IsValid = false;
@@ -92,10 +97,13 @@ namespace PTCData
 
             if (!IsValid)
             { 
-
                 if (Mode == "Add")
                 {
                     AddMode();
+                }
+                if (Mode == "Edit")
+                {
+                    EditMode();
                 }
             }
         }
@@ -122,6 +130,13 @@ namespace PTCData
             AddMode();
         }
 
+        private void Edit()
+        {
+            Entity = base.TrainingProductManager.Get(Convert.ToInt32(EventArgument));   
+
+            EditMode();
+        }
+
         private void AddMode()
         {
             IsListAreaVisible = false;
@@ -129,6 +144,14 @@ namespace PTCData
             IsDetailAreaVisible = true;
 
             Mode = "Add";
+        }
+        private void EditMode()
+        {
+            IsListAreaVisible = false;
+            IsSearchAreaVisible = false;
+            IsDetailAreaVisible = true;
+
+            Mode = "Edit";
         }
         private void ResetSearch()
         {
@@ -138,7 +161,7 @@ namespace PTCData
         private void Get()
         {
             //TrainingProductManager mgr = new TrainingProductManager();
-            Products = _tpmgr.Get(SearchEntity);
+            Products = TrainingProductManager.Get(SearchEntity);
         }
     }
 }
