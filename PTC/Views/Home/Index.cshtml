@@ -118,24 +118,33 @@
                         <th>Introduction Date</th>
                         <th>Url</th>
                         <th>Price</th>
+                        <th class="pdsa-action-button-column">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Products)
                     {
-                        <tr>
-                            <td class="pdsa-action-button-column">
-                                <a href="#" data-psda-action="edit"
-                                   data-psda-val="@item.ProductId"
-                                   class="btn btn-default btn-sm">
-                                    <i class="glyphicon glyphicon-edit"></i>
-                                </a>
-                            </td>
-                            <td>@item.ProductName</td>
-                            <td>@item.IntroductionDate</td>
-                            <td>@item.Url</td>
-                            <td>@item.Price.ToString("c")</td>
-                        </tr>
+                    <tr>
+                        <td class="pdsa-action-button-column">
+                            <a href="#" data-psda-action="edit"
+                               data-psda-val="@item.ProductId"
+                               class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                        </td>
+                        <td>@item.ProductName</td>
+                        <td>@item.IntroductionDate</td>
+                        <td>@item.Url</td>
+                        <td>@item.Price.ToString("c")</td>
+                        <td class="pdsa-action-button-column">
+                            <a href="#" data-psda-action="delete"
+                               data-psda-val="@item.ProductId"
+                               onclick="return confirm('Delete this product?');"
+                               class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

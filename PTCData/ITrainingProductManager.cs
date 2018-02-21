@@ -9,6 +9,7 @@ namespace PTCData
 
         List<TrainingProduct> Get(TrainingProduct entity);
         TrainingProduct Get(int productId);
+        bool Delete(TrainingProduct entity);
         bool Update(TrainingProduct entity);
         bool Insert(TrainingProduct entity);
         bool Validate(TrainingProduct entity);

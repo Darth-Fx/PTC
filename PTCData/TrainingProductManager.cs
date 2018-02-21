@@ -58,6 +58,12 @@ namespace PTCData
             return Products.Find(i => i.ProductId == productId);
         }
 
+        public bool Delete(TrainingProduct entity)
+        {
+            var removeObject = Get(entity.ProductId);
+            return Products.Remove(removeObject);
+        }
+
         public bool Update(TrainingProduct entity)
         {
             bool isValid = false;

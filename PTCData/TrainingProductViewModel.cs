@@ -62,6 +62,11 @@ namespace PTCData
                     Edit();
                     break;
 
+                case "delete":
+                    ResetSearch();
+                    Delete();
+                    break;
+
                 case "resetsearch":
                     ResetSearch();
                     Get();
@@ -75,7 +80,18 @@ namespace PTCData
                     break;
             }
         }
+        private void Delete()
+        {
+            TrainingProduct entity = new TrainingProduct
+            {
+                ProductId = Convert.ToInt32(EventArgument)
+            };
+            TrainingProductManager.Delete(entity);
+            
+            Get();
 
+            ListMode();
+        }
         private void Save()
         {
 
